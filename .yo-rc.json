@@ -1,0 +1,42 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "com.swiftcode",
+      "nativeLanguage": "zh-cn"
+    },
+    "jhipsterVersion": "6.5.0",
+    "applicationType": "monolith",
+    "baseName": "spaAdmin",
+    "packageName": "com.swiftcode",
+    "packageFolder": "com/swiftcode",
+    "serverPort": "8080",
+    "authenticationType": "jwt",
+    "cacheProvider": "ehcache",
+    "enableHibernateCache": true,
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "mysql",
+    "prodDatabaseType": "mysql",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
+    "buildTool": "maven",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "ZTY5NTg0NGU1NmM2MjBlNDE2YzI2MDdhYzlhZGExNDFkMTE4MDA2ZmI1Yjc2NmUyYzU1YmQ1NzRhMTMwNDc5Yjc1YjIxYjQ1ZDM3MzhmODQ2NTNlOTVkNjQzYmI3MDdhNjI0Y2VhY2ViOTQ1ZWUyMGI5MTU3ZjhhNzVkNWEwOTY=",
+    "embeddableLaunchScript": false,
+    "useSass": true,
+    "clientPackageManager": "npm",
+    "skipClient": true,
+    "testFrameworks": [],
+    "jhiPrefix": "spa",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": true,
+    "nativeLanguage": "zh-cn",
+    "languages": [
+      "zh-cn"
+    ],
+    "blueprints": []
+  }
+}
