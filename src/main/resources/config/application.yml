@@ -153,3 +153,5 @@ jhipster:
 # ===================================================================
 
 # application:
+file:
+  uploadDir: /var/www/sap/uploads

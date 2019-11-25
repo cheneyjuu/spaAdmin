@@ -28,7 +28,7 @@
     "clientPackageManager": "npm",
     "skipClient": true,
     "testFrameworks": [],
-    "jhiPrefix": "spa",
+    "jhiPrefix": "sap",
     "entitySuffix": "",
     "dtoSuffix": "DTO",
     "otherModules": [],
