@@ -3,10 +3,9 @@ package com.swiftcode.web.rest;
 import com.swiftcode.service.MalfunctionService;
 import com.swiftcode.service.dto.MalfunctionDTO;
 import com.swiftcode.service.util.CommonResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 /**
  * @author chen
@@ -30,5 +29,17 @@ public class MalfunctionResource {
     public CommonResult<MalfunctionDTO> link(@RequestBody MalfunctionDTO dto) {
         MalfunctionDTO link = service.link(dto);
         return CommonResult.success(link, "关联成功");
+    }
+
+    @GetMapping("/malfunction")
+    public CommonResult<MalfunctionDTO> findByTradeNo(@RequestParam(value = "tradeNo", required = false) String tradeNo,
+                                                      @RequestParam(value = "id", required = false) Long id) {
+        Optional<MalfunctionDTO> dto;
+        if (null != tradeNo) {
+            dto = service.findByTradeNo(tradeNo);
+        } else {
+            dto = service.findById(id);
+        }
+        return dto.map(CommonResult::success).orElseGet(CommonResult::failed);
     }
 }

@@ -54,4 +54,8 @@ public class MalfunctionDTO implements Serializable {
      * 是否停机
      */
     private Boolean isStop;
+    /**
+     * 创建时间
+     */
+    private String createTime;
 }

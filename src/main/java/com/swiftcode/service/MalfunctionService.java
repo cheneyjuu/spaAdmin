@@ -5,6 +5,9 @@ import com.swiftcode.repository.MalfunctionRepository;
 import com.swiftcode.service.dto.MalfunctionDTO;
 import com.swiftcode.service.mapper.MalfunctionMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 /**
  * @author chen
@@ -31,5 +34,19 @@ public class MalfunctionService {
         malfunction.linkMalfunction(dto.getSapNo());
         repository.save(malfunction);
         return mapper.toDto(malfunction);
+    }
+
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
+    public Optional<MalfunctionDTO> findByTradeNo(String tradeNo) {
+        return Optional.of(repository.findByTradeNo(tradeNo))
+            .filter(Optional::isPresent)
+            .map(Optional::get)
+            .map(entity -> mapper.toDto(entity));
+    }
+
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
+    public Optional<MalfunctionDTO> findById(Long id) {
+        return repository.findById(id)
+            .map(entity -> mapper.toDto(entity));
     }
 }

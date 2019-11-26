@@ -6,6 +6,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -69,6 +70,8 @@ public class Malfunction implements Serializable {
      */
     private Boolean isStop;
 
+    private LocalDateTime createTime;
+
     /**
      * 新增故障
      *
@@ -90,6 +93,7 @@ public class Malfunction implements Serializable {
         this.addDesc = addDesc;
         this.remark = remark;
         this.isStop = isStop;
+        this.createTime = LocalDateTime.now();
     }
 
     /**

@@ -7,6 +7,7 @@ import com.swiftcode.domain.Malfunction;
 import com.swiftcode.service.dto.MalfunctionDTO;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import java.util.List;
 
@@ -17,6 +18,7 @@ import java.util.List;
 public interface MalfunctionMapper {
     Malfunction toEntity(MalfunctionDTO dto);
 
+    @Mapping(source = "createTime", target = "createTime", dateFormat = "yyyy-MM-dd")
     MalfunctionDTO toDto(Malfunction entity);
 
     default String map(List<String> value) {
