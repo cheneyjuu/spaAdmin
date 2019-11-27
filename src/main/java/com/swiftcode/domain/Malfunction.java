@@ -6,7 +6,6 @@ import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,7 +18,7 @@ import java.util.Objects;
  **/
 @Data
 @Entity
-@Table(name = "sap_malfunction_jc", indexes = {
+@Table(name = "sap_malfunction", indexes = {
     @Index(name = "ID_IDX", columnList = "id", unique = true)
 })
 @ApiModel("故障")
@@ -29,6 +28,49 @@ public class Malfunction implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", columnDefinition = "bigint COMMENT '主键，自动生成'")
     private Long id;
+    /**
+     * 员工工号
+     */
+    @Column(name = "user_code", columnDefinition = "varchar(10) COMMENT '用户工号'")
+    private String userCode;
+    /**
+     * 工单标题
+     * 由SAP返回
+     *
+     * @see #linkMalfunction
+     */
+    @Column(name = "title", columnDefinition = "varchar(50) COMMENT '工单标题'")
+    private String title;
+    /**
+     * 设备等级
+     */
+    @Column(name = "level", columnDefinition = "varchar(10) COMMENT '设备等级'")
+    private String level;
+    /**
+     * 工单状态
+     */
+    @Column(name = "status", columnDefinition = "varchar(10) COMMENT '工单状态'")
+    private String status;
+    /**
+     * 位置
+     */
+    @Column(name = "location", columnDefinition = "varchar(50) COMMENT '位置'")
+    private String location;
+    /**
+     * 设备
+     */
+    @Column(name = "device", columnDefinition = "varchar(50) COMMENT '设备'")
+    private String device;
+    /**
+     * 上报时长
+     */
+    @Column(name = "report_time", columnDefinition = "varchar(20) COMMENT '上报时长'")
+    private String reportTime;
+    /**
+     * 等待时长
+     */
+    @Column(name = "wait_time", columnDefinition = "varchar(20) COMMENT '等待时长'")
+    private String waitTime;
     /**
      * 内部单号
      */
@@ -60,7 +102,6 @@ public class Malfunction implements Serializable {
      * 报修对象
      */
     @Column(name = "target", columnDefinition = "varchar(100) COMMENT '报修对象'")
-    @NotBlank(message = "报修对象不能为空")
     private String target;
     /**
      * 故障描述
@@ -91,14 +132,18 @@ public class Malfunction implements Serializable {
     /**
      * 新增故障
      *
-     * @param pics    图片路径
-     * @param video   视频路径
-     * @param target  报修对象
-     * @param desc    故障描述
-     * @param addDesc 补充故障描述
-     * @param remark  备注
+     * @param userCode 员工工号
+     * @param location 位置
+     * @param device   报修设备
+     * @param pics     图片路径
+     * @param video    视频路径
+     * @param target   报修对象
+     * @param desc     故障描述
+     * @param addDesc  补充故障描述
+     * @param remark   备注
+     * @param isStop   是否停机
      */
-    public void newMalfunction(List<String> pics, String video, String target, String desc, String addDesc, String remark, Boolean isStop) {
+    public void newMalfunction(String userCode, String location, String device, List<String> pics, String video, String target, String desc, String addDesc, String remark, Boolean isStop) {
         Objects.requireNonNull(isStop, "停机状态不能为空");
         this.tradeNo = RandomUtil.randomNumbers(12);
         this.type = 1;
@@ -110,16 +155,23 @@ public class Malfunction implements Serializable {
         this.remark = remark;
         this.isStop = isStop;
         this.createTime = LocalDateTime.now();
+        this.level = "1 级";
+        this.status = "新工单";
+        this.device = device;
+        this.location = location;
+        this.userCode = userCode;
     }
 
     /**
      * 关联故障
      *
      * @param sapNo 外部单号
+     * @param title 工单标题
      */
-    public void linkMalfunction(String sapNo) {
+    public void linkMalfunction(String title, String sapNo) {
         Objects.requireNonNull(this.id, "不能更新不存在的故障");
         Objects.requireNonNull(sapNo, "外部故障单号不能为空");
+        this.title = title;
         this.sapNo = sapNo;
     }
 }

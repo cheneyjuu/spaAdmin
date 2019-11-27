@@ -7,7 +7,9 @@ import com.swiftcode.service.mapper.MalfunctionMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author chen
@@ -24,14 +26,14 @@ public class MalfunctionService {
 
     public MalfunctionDTO add(MalfunctionDTO dto) {
         Malfunction malfunction = new Malfunction();
-        malfunction.newMalfunction(dto.getPictures(), dto.getVideo(), dto.getTarget(), dto.getDesc(), dto.getAddDesc(), dto.getRemark(), dto.getIsStop());
+        malfunction.newMalfunction(dto.getUserCode(), dto.getLocation(), dto.getDevice(), dto.getPictures(), dto.getVideo(), dto.getTarget(), dto.getDesc(), dto.getAddDesc(), dto.getRemark(), dto.getIsStop());
         Malfunction entity = repository.save(malfunction);
         return mapper.toDto(entity);
     }
 
     public MalfunctionDTO link(MalfunctionDTO dto) {
         Malfunction malfunction = repository.findById(dto.getId()).orElseThrow(IllegalArgumentException::new);
-        malfunction.linkMalfunction(dto.getSapNo());
+        malfunction.linkMalfunction(dto.getTitle(), dto.getSapNo());
         repository.save(malfunction);
         return mapper.toDto(malfunction);
     }
@@ -48,5 +50,13 @@ public class MalfunctionService {
     public Optional<MalfunctionDTO> findById(Long id) {
         return repository.findById(id)
             .map(entity -> mapper.toDto(entity));
+    }
+
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
+    public List<MalfunctionDTO> findByUser(String userCode) {
+        return repository.findAllByUserCode(userCode)
+            .stream()
+            .map(entity -> mapper.toDto(entity))
+            .collect(Collectors.toList());
     }
 }

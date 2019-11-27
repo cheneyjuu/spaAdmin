@@ -7,6 +7,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -47,5 +48,12 @@ public class MalfunctionResource {
             dto = service.findById(id);
         }
         return dto.map(CommonResult::success).orElseGet(CommonResult::failed);
+    }
+
+    @ApiOperation("根据用户工号查询用户上报的故障单列表")
+    @GetMapping("/malfunction/user/{userCode}")
+    public CommonResult<List<MalfunctionDTO>> findByUser(@PathVariable("userCode") String userCode) {
+        List<MalfunctionDTO> list = service.findByUser(userCode);
+        return CommonResult.success(list, "查询成功");
     }
 }
