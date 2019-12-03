@@ -40,10 +40,13 @@ public class MalfunctionResource {
     @ApiOperation("根据内部故障单和ID查询故障单信息")
     @GetMapping("/malfunction")
     public CommonResult<MalfunctionDTO> findByTradeNo(@RequestParam(value = "tradeNo", required = false) String tradeNo,
+                                                      @RequestParam(value = "sapNo", required = false) String sapNo,
                                                       @RequestParam(value = "id", required = false) Long id) {
         Optional<MalfunctionDTO> dto;
         if (null != tradeNo) {
             dto = service.findByTradeNo(tradeNo);
+        } else if (null != sapNo) {
+            dto = service.findBySapNo(sapNo);
         } else {
             dto = service.findById(id);
         }

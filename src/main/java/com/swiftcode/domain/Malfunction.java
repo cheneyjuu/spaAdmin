@@ -143,7 +143,7 @@ public class Malfunction implements Serializable {
      * @param remark   备注
      * @param isStop   是否停机
      */
-    public void newMalfunction(String userCode, String location, String device, List<String> pics, String video, String target, String desc, String addDesc, String remark, Boolean isStop) {
+    public void newMalfunction(String userCode, String location, String device, List<String> pics, String video, String target, String desc, String addDesc, String remark, Boolean isStop, String title, String sapNo) {
         Objects.requireNonNull(isStop, "停机状态不能为空");
         this.tradeNo = RandomUtil.randomNumbers(12);
         this.type = 1;
@@ -160,6 +160,8 @@ public class Malfunction implements Serializable {
         this.device = device;
         this.location = location;
         this.userCode = userCode;
+        this.title = title;
+        this.sapNo = sapNo;
     }
 
     /**
