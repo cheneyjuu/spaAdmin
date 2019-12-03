@@ -26,7 +26,7 @@ public class MalfunctionService {
 
     public MalfunctionDTO add(MalfunctionDTO dto) {
         Malfunction malfunction = new Malfunction();
-        malfunction.newMalfunction(dto.getUserCode(), dto.getLocation(), dto.getDevice(), dto.getPictures(), dto.getVideo(), dto.getTarget(), dto.getDesc(), dto.getAddDesc(), dto.getRemark(), dto.getIsStop());
+        malfunction.newMalfunction(dto.getUserCode(), dto.getLocation(), dto.getDevice(), dto.getPictures(), dto.getVideo(), dto.getTarget(), dto.getDesc(), dto.getAddDesc(), dto.getRemark(), dto.getIsStop(), dto.getTitle(), dto.getSapNo());
         Malfunction entity = repository.save(malfunction);
         return mapper.toDto(entity);
     }
@@ -49,6 +49,14 @@ public class MalfunctionService {
     @Transactional(rollbackFor = Exception.class, readOnly = true)
     public Optional<MalfunctionDTO> findById(Long id) {
         return repository.findById(id)
+            .map(entity -> mapper.toDto(entity));
+    }
+
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
+    public Optional<MalfunctionDTO> findBySapNo(String sapNo) {
+        return Optional.of(repository.findBySapNo(sapNo))
+            .filter(Optional::isPresent)
+            .map(Optional::get)
             .map(entity -> mapper.toDto(entity));
     }
 

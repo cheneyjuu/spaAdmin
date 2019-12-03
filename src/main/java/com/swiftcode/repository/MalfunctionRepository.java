@@ -12,5 +12,7 @@ import java.util.Optional;
 public interface MalfunctionRepository extends JpaRepository<Malfunction, Long> {
     Optional<Malfunction> findByTradeNo(String tradeNo);
 
+    Optional<Malfunction> findBySapNo(String sapNo);
+
     List<Malfunction> findAllByUserCode(String userCode);
 }
