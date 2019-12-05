@@ -3,6 +3,8 @@ package com.swiftcode.web.rest;
 
 import com.swiftcode.service.FileService;
 import com.swiftcode.service.dto.UploadFileResponse;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -24,6 +26,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @RestController
 @RequestMapping("/api")
+@Api(tags = "文件上传、下载")
 public class FileResource {
     private FileService fileService;
 
@@ -32,6 +35,7 @@ public class FileResource {
     }
 
     @PostMapping("/uploadFile")
+    @ApiOperation("单文件上传")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
         String fileName = fileService.storeFile(file);
 
@@ -46,6 +50,7 @@ public class FileResource {
 
 
     @PostMapping("/uploadMultipleFiles")
+    @ApiOperation("多文件上传")
     public List<UploadFileResponse> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
         return Arrays.stream(files)
             .map(this::uploadFile)
@@ -53,6 +58,7 @@ public class FileResource {
     }
 
     @GetMapping("/downloadFile/{fileName:.+}")
+    @ApiOperation("文件下载")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
         // Load file as Resource
         Resource resource = fileService.loadFileAsResource(fileName);

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  **/
 @RestController
 @RequestMapping("/api/sap")
-@Api(tags = "SapUserResource")
+@Api(tags = "SAP用户管理")
 public class SapUserResource {
     private SapUserService service;
 

@@ -15,7 +15,7 @@ import java.util.Optional;
  **/
 @RestController
 @RequestMapping("/api")
-@Api(tags = "MalfunctionResource")
+@Api(tags = "故障单")
 public class MalfunctionResource {
     private MalfunctionService service;
 
