@@ -10,12 +10,14 @@ import com.swiftcode.service.dto.PasswordChangeDTO;
 import com.swiftcode.service.dto.UserDTO;
 import com.swiftcode.web.rest.errors.*;
 import com.swiftcode.web.rest.vm.KeyAndPasswordVM;
+import com.swiftcode.web.rest.vm.LoginVM;
 import com.swiftcode.web.rest.vm.ManagedUserVM;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -64,8 +66,19 @@ public class AccountResource {
         if (!checkPasswordLength(managedUserVM.getPassword())) {
             throw new InvalidPasswordException();
         }
-        User user = userService.registerUser(managedUserVM, managedUserVM.getPassword());
-        mailService.sendActivationEmail(user);
+        userService.registerUser(managedUserVM, managedUserVM.getPassword());
+    }
+
+    @GetMapping("/exist/{username}")
+    public ResponseEntity<Map<String, Boolean>> isExist(@PathVariable String username) {
+        Map<String, Boolean> result = new HashMap<>();
+        result.put("isExist", userRepository.findOneByLogin(username).isPresent());
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @PostMapping("/update")
+    public void updateUser(@RequestBody ManagedUserVM managedUserVM) {
+        userService.updateUser(managedUserVM);
     }
 
     /**
@@ -117,10 +130,6 @@ public class AccountResource {
     @PostMapping("/account")
     public void saveAccount(@Valid @RequestBody UserDTO userDTO) {
         String userLogin = SecurityUtils.getCurrentUserLogin().orElseThrow(() -> new AccountResourceException("Current user login not found"));
-        Optional<User> existingUser = userRepository.findOneByEmailIgnoreCase(userDTO.getEmail());
-        if (existingUser.isPresent() && (!existingUser.get().getLogin().equalsIgnoreCase(userLogin))) {
-            throw new EmailAlreadyUsedException();
-        }
         Optional<User> user = userRepository.findOneByLogin(userLogin);
         if (!user.isPresent()) {
             throw new AccountResourceException("User could not be found");
