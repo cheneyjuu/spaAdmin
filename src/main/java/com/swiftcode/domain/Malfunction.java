@@ -79,7 +79,7 @@ public class Malfunction implements Serializable {
     /**
      * 外部单号
      */
-    @Column(name = "sap_no", columnDefinition = "varchar(50) COMMENT '外部单号'")
+    @Column(name = "sap_no", unique = true, columnDefinition = "varchar(50) COMMENT '外部单号'")
     private String sapNo;
     /**
      * 故障类型
@@ -98,6 +98,11 @@ public class Malfunction implements Serializable {
      */
     @Column(name = "video", columnDefinition = "varchar(500) COMMENT '视频路径'")
     private String video;
+    /**
+     * 音频路径
+     */
+    @Column(name = "audio", columnDefinition = "varchar(500) COMMENT '音频路径'")
+    private String audio;
     /**
      * 报修对象
      */
@@ -137,18 +142,22 @@ public class Malfunction implements Serializable {
      * @param device   报修设备
      * @param pics     图片路径
      * @param video    视频路径
+     * @param audio    音频路径
      * @param target   报修对象
      * @param desc     故障描述
      * @param addDesc  补充故障描述
      * @param remark   备注
      * @param isStop   是否停机
+     * @param title    工单标题
+     * @param sapNo    sap工单号
      */
-    public void newMalfunction(String userCode, String location, String device, List<String> pics, String video, String target, String desc, String addDesc, String remark, Boolean isStop, String title, String sapNo) {
+    public void newMalfunction(String userCode, String location, String device, List<String> pics, String video, String audio, String target, String desc, String addDesc, String remark, Boolean isStop, String title, String sapNo) {
         Objects.requireNonNull(isStop, "停机状态不能为空");
         this.tradeNo = RandomUtil.randomNumbers(12);
         this.type = 1;
         this.pictures = Joiner.on(",").join(pics);
         this.video = video;
+        this.audio = audio;
         this.target = target;
         this.desc = desc;
         this.addDesc = addDesc;

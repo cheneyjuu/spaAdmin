@@ -39,6 +39,8 @@ public class MalfunctionDTO implements Serializable {
     private List<String> pictures;
     @ApiModelProperty(value = "视频路径")
     private String video;
+    @ApiModelProperty(value = "音频路径")
+    private String audio;
     @ApiModelProperty(value = "报修对象", required = true)
     private String target;
     @ApiModelProperty(value = "故障描述")

@@ -35,6 +35,18 @@ public class UserDTO {
     @Size(min = 5, max = 254)
     private String email;
 
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    @Email
+    @Size(min = 5, max = 254)
+    private String phoneNumber;
+
     @Size(max = 256)
     private String imageUrl;
 
