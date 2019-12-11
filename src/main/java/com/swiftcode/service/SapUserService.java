@@ -9,6 +9,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * @author chen
  **/
@@ -30,5 +33,10 @@ public class SapUserService {
         aUser.setPassword(passwordEncoder.encode(Constants.DEFAULT_PWD));
         SapUser sapUser = repository.save(aUser);
         return mapper.toDto(sapUser);
+    }
+
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
+    public List<SapUser> findAll() {
+        return repository.findAll();
     }
 }
