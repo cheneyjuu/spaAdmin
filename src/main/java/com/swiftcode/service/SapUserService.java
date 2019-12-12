@@ -39,4 +39,12 @@ public class SapUserService {
     public List<SapUser> findAll() {
         return repository.findAll();
     }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void resetPassword(String userCode) {
+        repository.findByUserCode(userCode).ifPresent(sapUser -> {
+            sapUser.setPassword(passwordEncoder.encode(Constants.DEFAULT_PWD));
+            repository.save(sapUser);
+        });
+    }
 }

@@ -36,4 +36,10 @@ public class SapUserResource {
         List<SapUser> list = service.findAll();
         return CommonResult.success(list);
     }
+
+    @PutMapping("/users/{userCode}/reset")
+    public CommonResult<Void> resetPassword(@PathVariable("userCode") String userCode) {
+        service.resetPassword(userCode);
+        return CommonResult.success(null, "密码重置成功");
+    }
 }
