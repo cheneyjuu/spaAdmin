@@ -46,4 +46,28 @@ public class SapXmlUtil {
             "    </Body>\n" +
             "</Envelope>";
     }
+
+    /**
+     * 释放人员
+     *
+     * @param userCode 员工工号
+     * @return xml
+     */
+    public static String buildReleaseUserXml(String userCode) {
+        return "<Envelope xmlns=\"http://schemas.xmlsoap.org/soap/envelope/\">\n" +
+            "    <Body>\n" +
+            "        <ZpmReleasePernr xmlns=\"urn:sap-com:document:sap:soap:functions:mc-style\">\n" +
+            "            <ItData xmlns=\"\">\n" +
+            "                <!-- Optional -->\n" +
+            "                <item>\n" +
+            "                    <Pernr></Pernr>\n" +
+            "                    <Pernr1>" + userCode + "</Pernr1>\n" +
+            "                    <Aufnr></Aufnr>\n" +
+            "                </item>\n" +
+            "            </ItData>\n" +
+            "            <Pernr xmlns=\"\"></Pernr>\n" +
+            "        </ZpmReleasePernr>\n" +
+            "    </Body>\n" +
+            "</Envelope>";
+    }
 }
