@@ -43,7 +43,6 @@ public class UserDTO {
         this.phoneNumber = phoneNumber;
     }
 
-    @Email
     @Size(min = 5, max = 254)
     private String phoneNumber;
 

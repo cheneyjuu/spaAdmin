@@ -24,6 +24,7 @@ public interface SapUserMapper {
         @Mapping(source = "WERKS", target = "factoryCode"),
         @Mapping(source = "TXTMD", target = "factoryName"),
         @Mapping(source = "WCTYPE", target = "isMalStaff"),
+        @Mapping(source = "phoneNumber", target = "phoneNumber")
     })
     SapUser toEntity(SapUserDTO dto);
 
