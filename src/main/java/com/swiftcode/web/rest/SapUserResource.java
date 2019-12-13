@@ -55,12 +55,15 @@ public class SapUserResource {
         List<SapUser> list = service.findAll();
         return CommonResult.success(list);
     }
-
     @ApiOperation("SAP USER 是否存在")
     @GetMapping("/exist/{userCode}")
     public ResponseEntity<Map<String, Boolean>> isExist(@PathVariable String userCode) {
         Map<String, Boolean> result = new HashMap<>();
         result.put("isExist", service.isExist(userCode));
         return new ResponseEntity<>(result, HttpStatus.OK);
+    @PutMapping("/users/{userCode}/reset")
+    public CommonResult<Void> resetPassword(@PathVariable("userCode") String userCode) {
+        service.resetPassword(userCode);
+        return CommonResult.success(null, "密码重置成功");
     }
 }

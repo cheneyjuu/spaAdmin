@@ -2,10 +2,6 @@ package com.swiftcode.service.util;
 
 import com.swiftcode.service.dto.BottleneckDTO;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
 /**
  * SapXmlUtil Class
  *
@@ -13,9 +9,12 @@ import java.time.format.DateTimeFormatter;
  * @date 2019/12/11 14:41
  */
 public class SapXmlUtil {
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy.MM.dd");
 
     public static String buildImportDeviceXml(BottleneckDTO bottleneckDTO) {
+        String replaceStartDate = bottleneckDTO.getStartDate().replace("-", "");
+        String replaceEndDate = bottleneckDTO.getEndDate().replace("-", "");
+        String replaceStartTime = bottleneckDTO.getStartTime().replace(":", "");
+        String replaceEndTime = bottleneckDTO.getEndTime().replace(":", "");
         return "<Envelope xmlns=\"http://schemas.xmlsoap.org/soap/envelope/\">\n" +
             "    <Body>\n" +
             "        <ZpmImportEqunr xmlns=\"urn:sap-com:document:sap:soap:functions:mc-style\">\n" +
@@ -24,10 +23,10 @@ public class SapXmlUtil {
             "                <item>\n" +
             "                    <Pernr>" + bottleneckDTO.getUserCode() + "</Pernr>\n" +
             "                    <Equnr>" + bottleneckDTO.getDeviceCode() + "</Equnr>\n" +
-            "                    <Sdate>" + bottleneckDTO.getStartTime().format(FORMATTER) + "</Sdate>\n" +
-            "                    <Stime></Stime>\n" +
-            "                    <Edate>" + bottleneckDTO.getEndTime().format(FORMATTER) + "</Edate>\n" +
-            "                    <Etime></Etime>\n" +
+            "                    <Sdate>" + replaceStartDate + "</Sdate>\n" +
+            "                    <Stime>" + replaceStartTime + "</Stime>\n" +
+            "                    <Edate>" + replaceEndDate + "</Edate>\n" +
+            "                    <Etime>" + replaceEndTime + "</Etime>\n" +
             "                    <Message></Message>\n" +
             "                </item>\n" +
             "            </ItData>\n" +

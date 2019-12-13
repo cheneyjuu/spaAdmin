@@ -71,5 +71,12 @@ public class SapUserService {
     @Transactional(rollbackFor = Exception.class, readOnly = true)
     public Boolean isExist(String userCode) {
         return repository.findByUserCode(userCode).isPresent();
+
+    @Transactional(rollbackFor = Exception.class)
+    public void resetPassword(String userCode) {
+        repository.findByUserCode(userCode).ifPresent(sapUser -> {
+            sapUser.setPassword(passwordEncoder.encode(Constants.DEFAULT_PWD));
+            repository.save(sapUser);
+        });
     }
 }
