@@ -33,4 +33,6 @@ public class SapUserDTO implements Serializable {
     private String TXTMD;
     @ApiModelProperty(value = "是否维修人员")
     private String WCTYPE;
+    @ApiModelProperty(value = "手机号")
+    private String phoneNumber;
 }

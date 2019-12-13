@@ -54,6 +54,8 @@ public class SapUser extends AbstractAuditingEntity {
     @Column(name = "is_mal_staff", columnDefinition = "char COMMENT '是否维修人员'")
     @NotNull(message = "'是否维修人员' 字段不能为空")
     private String isMalStaff;
+    @Column(name = "phone_number", columnDefinition = "varchar(30) COMMENT '手机号'")
+    private String phoneNumber;
     @JsonIgnore
     @ManyToMany
     @JoinTable(
