@@ -70,4 +70,19 @@ public class SapXmlUtil {
             "    </Body>\n" +
             "</Envelope>";
     }
+
+    public static String buildGetPositionAndDeviceXml() {
+        return "<Envelope xmlns=\"http://schemas.xmlsoap.org/soap/envelope/\">\n" +
+            "    <Body>\n" +
+            "        <ZpmSearchTplnrNew xmlns=\"urn:sap-com:document:sap:soap:functions:mc-style\">\n" +
+            "            <!-- Optional -->\n" +
+            "            <EtData xmlns=\"\">\n" +
+            "            </EtData>\n" +
+            "            <!-- Optional -->\n" +
+            "            <EtData1 xmlns=\"\">\n" +
+            "            </EtData1>\n" +
+            "        </ZpmSearchTplnrNew>\n" +
+            "    </Body>\n" +
+            "</Envelope>";
+    }
 }
