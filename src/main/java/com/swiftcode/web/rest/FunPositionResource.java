@@ -37,10 +37,11 @@ public class FunPositionResource {
         return CommonResult.success(positions, "查找成功");
     }
 
+    @ApiOperation("手动同步接口")
     @GetMapping("/positions/sync")
-    public CommonResult<Void> findPositionsAndDevices() {
+    public CommonResult<Void> syncPositionsAndDevices() {
         try {
-            service.findPositionsAndDevices();
+            service.syncPositionsAndDevices();
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }

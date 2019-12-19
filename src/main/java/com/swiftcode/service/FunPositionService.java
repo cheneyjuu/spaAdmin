@@ -241,7 +241,7 @@ public class FunPositionService {
      */
     @Scheduled(cron = "0 0 0 * * ?")
     @Transactional(rollbackFor = Exception.class)
-    public void findPositionsAndDevices() throws URISyntaxException {
+    public void syncPositionsAndDevices() throws URISyntaxException {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.add("authorization", Constants.AUTH_CODE);

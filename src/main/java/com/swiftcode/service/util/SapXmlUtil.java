@@ -71,6 +71,11 @@ public class SapXmlUtil {
             "</Envelope>";
     }
 
+    /**
+     * 同步功能位置和设备数据
+     *
+     * @return xml
+     */
     public static String buildGetPositionAndDeviceXml() {
         return "<Envelope xmlns=\"http://schemas.xmlsoap.org/soap/envelope/\">\n" +
             "    <Body>\n" +
@@ -82,6 +87,22 @@ public class SapXmlUtil {
             "            <EtData1 xmlns=\"\">\n" +
             "            </EtData1>\n" +
             "        </ZpmSearchTplnrNew>\n" +
+            "    </Body>\n" +
+            "</Envelope>";
+    }
+
+    /**
+     * 同步物料数据
+     *
+     * @return xml
+     */
+    public static String buildMaterialsXml() {
+        return "<Envelope xmlns=\"http://schemas.xmlsoap.org/soap/envelope/\">\n" +
+            "    <Body>\n" +
+            "        <ZpmSearchMatnr xmlns=\"urn:sap-com:document:sap:soap:functions:mc-style\">\n" +
+            "            <EtData xmlns=\"\">\n" +
+            "            </EtData>\n" +
+            "        </ZpmSearchMatnr>\n" +
             "    </Body>\n" +
             "</Envelope>";
     }
